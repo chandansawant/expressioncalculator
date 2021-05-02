@@ -1,0 +1,41 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<beans xmlns = "http://www.springframework.org/schema/beans"
+       xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation = "http://www.springframework.org/schema/beans
+   http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+
+    <bean id="OPEN" class="com.practice.expressioncalculator.model.Price">
+        <constructor-arg name="name" value="OPEN"/>
+    </bean>
+
+    <bean id="CLOSE" class="com.practice.expressioncalculator.model.Price">
+        <constructor-arg name="name" value="CLOSE"/>
+    </bean>
+
+    <bean id="MID" class="com.practice.expressioncalculator.model.NumericIndicator">
+        <constructor-arg name="name" value="MID"/>
+        <constructor-arg name="expression" value="(OPEN + CLOSE) / 2"/>
+        <constructor-arg name="dependencies">
+            <set>
+                <ref bean="OPEN"/>
+                <ref bean="CLOSE"/>
+            </set>
+        </constructor-arg>
+    </bean>
+
+    <bean id="CLOSE_MINUS_1" class="com.practice.expressioncalculator.model.HistoricIndicator">
+        <constructor-arg name="indicator" ref="CLOSE"/>
+        <constructor-arg name="lookBackDays" value="1"/>
+    </bean>
+
+    <bean id="OPEN &lt; CLOSE" class="com.practice.expressioncalculator.model.BooleanIndicator">
+        <constructor-arg name="name" value="OPEN_LT_CLOSE"/>
+        <constructor-arg name="expression" value="OPEN &lt; CLOSE"/>
+        <constructor-arg name="dependencies">
+            <set>
+                <ref bean="OPEN"/>
+                <ref bean="CLOSE"/>
+            </set>
+        </constructor-arg>
+    </bean>
+</beans>
